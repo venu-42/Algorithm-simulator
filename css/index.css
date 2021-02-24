@@ -1,0 +1,55 @@
+*,*::after,*::before{
+    margin:0;
+    padding:0;
+    box-sizing:inherit;
+}
+
+html{
+    font-family:'Inter';
+}
+body{
+    box-sizing: border-box;
+}
+
+#change_src:focus{
+    box-shadow: none;
+}
+#change_src.active{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+#change_dest:focus{
+    box-shadow: none;
+}
+#change_dest.active{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.grid-table{
+    border-collapse: collapse;
+    background-color: beige;
+}
+.grid-table .box{
+    width:2rem;
+    height: 2rem;
+    /* background-color: #ddff80; */
+    border: 1px solid #777;
+    border-radius: 10px;
+    margin:1px;
+}
+.grid-table .box.checked{
+    background-color: #5f5833;
+    animation: bg-color .2s ease-out;
+}
+
+@keyframes bg-color{
+    0%{
+        transform:scale(0);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
