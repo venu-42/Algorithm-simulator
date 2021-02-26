@@ -36,20 +36,68 @@ body{
     width:2rem;
     height: 2rem;
     /* background-color: #ddff80; */
-    border: 1px solid #777;
-    border-radius: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 1px;
     margin:1px;
 }
 .grid-table .box.checked{
-    background-color: #5f5833;
-    animation: bg-color .2s ease-out;
+    background-color: #100e24;
+    animation: wallcells .2s ease-out;
+}
+.grid-table .box i::before{
+    animation: iconcells .2s ease-out;
+}
+.grid-table .box.visited{
+    background-color: #f34545;
+    animation: pathcells .2s ease-out;
+}
+.grid-table .box.visited.pathed{
+    background-color: #45f345;
+    animation: pathcells1 .2s ease-out;
 }
 
-@keyframes bg-color{
+@keyframes wallcells{
     0%{
         transform:scale(0);
     }
+    50%{
+        transform: scale(1.2);
+    }
     100%{
         transform:scale(1);
+    }
+}
+@keyframes pathcells{
+    0%{
+        border-radius: 10px;
+        transform:scale(0);
+    }
+    99%{
+        border-radius: 10px;
+        transform:scale(1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+@keyframes iconcells{
+    0%{
+        transform:scale(0.6);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+@keyframes pathcells1{
+    0%{
+        border-radius: 10px;
+        transform:scale(0);
+    }
+    99%{
+        border-radius: 10px;
+        transform:scale(1);
+    }
+    100%{
+        transform: scale(1);
     }
 }
