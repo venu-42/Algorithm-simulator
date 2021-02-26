@@ -11,22 +11,6 @@ body{
     box-sizing: border-box;
 }
 
-#change_src:focus{
-    box-shadow: none;
-}
-#change_src.active{
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-}
-#change_dest:focus{
-    box-shadow: none;
-}
-#change_dest.active{
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-}
 
 .grid-table{
     border-collapse: collapse;
@@ -40,7 +24,7 @@ body{
     border-radius: 1px;
     margin:1px;
 }
-.grid-table .box.checked{
+.grid-table .box.wall{
     background-color: #100e24;
     animation: wallcells .2s ease-out;
 }
@@ -54,6 +38,11 @@ body{
 .grid-table .box.visited.pathed{
     background-color: #45f345;
     animation: pathcells1 .2s ease-out;
+}
+.btn{
+    margin:10px 5px;
+    padding:5px;
+    display: block;
 }
 
 @keyframes wallcells{

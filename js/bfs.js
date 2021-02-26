@@ -42,7 +42,7 @@ function bfs(){
         setTimeout(function(){
             console.log(`${path[i][0]+1}-${path[i][1]+1}`);
             document.getElementById(`${path[i][0]+1}-${path[i][1]+1}`).classList.add('pathed');
-        },150*i);
+        },50*i);
     }
     function createPath(path){
         for(let i=0;i<path.length;i++){
@@ -79,5 +79,6 @@ function bfs(){
 }
 
 document.querySelector('#bfs-btn').addEventListener('click',function(){
+    clearPathfunc();
     bfs();
 })

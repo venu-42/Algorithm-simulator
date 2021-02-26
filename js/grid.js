@@ -1,11 +1,12 @@
 // let controlState='select_boxes';
 let isMouseDown=0,mouseDown_src=0,isMouseDownForMovingIcons=0;
 
-let height=25,width=40;
+let height=20,width=40;
 
 let [src_x,src_y]=[1,1];
 let [dest_x,dest_y]=[1,1];
 let virtual_grid=[];
+let clearPathfunc;
 
 
 let grid_table=document.querySelector('.grid-table');
@@ -17,7 +18,7 @@ icon_dest.setAttribute('class','bi bi-person-fill');
 // setting up the grid and src,dest points
 
 for(let i=0;i<height;i++){
-    let temp=[]
+    let temp=[];
     for(let j=0;j<width;j++){
         temp.push(0);
     }
@@ -34,6 +35,7 @@ for(let i=0;i<height;i++){
     grid_table.appendChild(row);
 }
 
+
 function set_src(x,y){
     [src_x,src_y]=[x,y];
     document.getElementById(`${x}-${y}`).appendChild(icon_src);
@@ -43,6 +45,15 @@ function set_dest(x,y){
     [dest_x,dest_y]=[x,y];
     document.getElementById(`${x}-${y}`).appendChild(icon_dest);
     document.getElementById(`${x}-${y}`).classList.add('text-center');
+}
+
+function clearWall(box){
+    let [x,y]=box.id.split('-');
+    if(box.classList.contains('wall')){
+        box.classList.remove('wall');
+        virtual_grid[x-1][y-1]=0;
+    }
+
 }
 
 function addingEventListeners(){
@@ -61,12 +72,12 @@ function addingEventListeners(){
             return;
         }
 
-        if(this.classList.contains('checked')) {
-            this.classList.remove('checked');
+        if(this.classList.contains('wall')) {
+            this.classList.remove('wall');
             virtual_grid[x-1][y-1]=0;
         }
         else {
-            this.classList.add('checked');
+            this.classList.add('wall');
             virtual_grid[x-1][y-1]=1;
         }
         console.log('cliked');
@@ -87,12 +98,12 @@ function addingEventListeners(){
                 }
                 if(isMouseDown==0||(x==src_x&&y==src_y)||(x==dest_x&&y==dest_y)) return ;
 
-                if(this.classList.contains('checked')) {
-                    this.classList.remove('checked');
+                if(this.classList.contains('wall')) {
+                    this.classList.remove('wall');
                     virtual_grid[x-1][y-1]=0;
                 }
                 else {
-                    this.classList.add('checked');
+                    this.classList.add('wall');
                     virtual_grid[x-1][y-1]=1;
                 }
             })
@@ -100,6 +111,22 @@ function addingEventListeners(){
             
         }
     )
+
+    document.getElementById('clearAll').addEventListener('click',function(){
+        allboxes.map(box=>{
+            box.classList.remove(...box.classList);
+            box.classList.add('box');
+        })
+    })
+    document.getElementById('clearWalls').addEventListener('click',function(){
+        allboxes.map(box=>clearWall(box))
+    })
+    clearPathfunc=function(){
+        allboxes.map(box=>{
+            box.classList.contains('visited')&&box.classList.remove('visited','pathed');
+        })
+    }
+    document.getElementById('clearPath').addEventListener('click',clearPathfunc);
     
     grid_table.addEventListener('mousedown',function(){
         isMouseDown=1;
@@ -115,4 +142,4 @@ function addingEventListeners(){
 
 addingEventListeners();
 set_src(5,10);
-set_dest(5,14);
+set_dest(9,30);

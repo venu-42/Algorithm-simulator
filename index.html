@@ -20,16 +20,27 @@
             </ul>
         </nav>
     </header>
-    <section id="controls">
-        <button id='bfs-btn' class="btn btn-primary">BFS</button>
-        <button id='change_src' class="btn btn-outline-success">Change source</button>
-        <button id='change_dest' class="btn btn-outline-success">Change dest.</button>
-    </section>
-    <section class="grid-section text-center my-5">
-        <table class='grid-table d-inline-block'>
+    <div class='d-flex '>
+        <section>
+            <nav id="controls" class='mx-2'>
+                <ul class="list-unstyled">
+                    <li id='bfs-btn' class='btn' >BFS</li>
+                </ul>
+                <hr/>
+                <ul class="list-unstyled">
+                    <li id='clearAll' class='btn' >ClearAll</li>
+                    <li id='clearWalls' class='btn' >ClearWalls</li>
+                    <li id='clearPath' class='btn' >ClearPath</li>
+                </ul>
 
-        </table>
-    </section>
+            </nav>
+        </section>
+        <section class="grid-section text-center my-1">
+            <table class='grid-table d-inline-block'>
+
+            </table>
+        </section>
+    </div>
     <script src='./js/grid.js' ></script>
     <script src='./js/bfs.js'></script>
 </body>
