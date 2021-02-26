@@ -1,6 +1,6 @@
 // let controlState='select_boxes';
 let isMouseDown=0,mouseDown_src=0,isMouseDownForMovingIcons=0;
-
+let timer;
 let height=20,width=40;
 
 let [src_x,src_y]=[1,1];
@@ -15,8 +15,8 @@ let icon_dest=document.createElement('i');
 icon_src.setAttribute('class','bi bi-pin-fill');
 icon_dest.setAttribute('class','bi bi-person-fill');
 
-// setting up the grid and src,dest points
 
+// creating the virtual-grid and src,dest points
 for(let i=0;i<height;i++){
     let temp=[];
     for(let j=0;j<width;j++){
@@ -35,7 +35,7 @@ for(let i=0;i<height;i++){
     grid_table.appendChild(row);
 }
 
-
+// setting src and dest icons positions
 function set_src(x,y){
     [src_x,src_y]=[x,y];
     document.getElementById(`${x}-${y}`).appendChild(icon_src);
@@ -47,6 +47,7 @@ function set_dest(x,y){
     document.getElementById(`${x}-${y}`).classList.add('text-center');
 }
 
+// clearing individual wall and resetting virtual box
 function clearWall(box){
     let [x,y]=box.id.split('-');
     if(box.classList.contains('wall')){
@@ -57,12 +58,12 @@ function clearWall(box){
 }
 
 function addingEventListeners(){
-    console.log('entered addingevents');
+    // console.log('entered addingevents');
     let allboxes=Array.from(document.querySelectorAll('.box'));
 
 
 
-    // ----------------selection of boxes events(mouse down)---------------------
+    // ----------------selection of walls events(mouse down)---------------------
     allboxes.map(box=>box.addEventListener('mousedown',function(event){
         let [x,y]=this.id.split('-');
 
@@ -71,6 +72,7 @@ function addingEventListeners(){
             mouseDown_src=(x==src_x&&y==src_y)?1:0;
             return;
         }
+        if(this.classList.contains('visited')) return;
 
         if(this.classList.contains('wall')) {
             this.classList.remove('wall');
@@ -80,10 +82,10 @@ function addingEventListeners(){
             this.classList.add('wall');
             virtual_grid[x-1][y-1]=1;
         }
-        console.log('cliked');
+        // console.log('cliked');
     }))
     
-    // ----------------selection of boxes events(mouse over)---------------------
+    // ----------------selection of walls events(mouse over)---------------------
     allboxes.map(box=>{
             box.addEventListener('mouseover',function(event){
                 let [x,y]=this.id.split('-');
@@ -97,7 +99,7 @@ function addingEventListeners(){
                     return ;
                 }
                 if(isMouseDown==0||(x==src_x&&y==src_y)||(x==dest_x&&y==dest_y)) return ;
-
+                if(this.classList.contains('visited')) return;
                 if(this.classList.contains('wall')) {
                     this.classList.remove('wall');
                     virtual_grid[x-1][y-1]=0;
@@ -112,22 +114,37 @@ function addingEventListeners(){
         }
     )
 
+
+    //------------------------Clearing btns events and their functions------------
+
+    //clearAll
     document.getElementById('clearAll').addEventListener('click',function(){
         allboxes.map(box=>{
+            clearWall(box);
             box.classList.remove(...box.classList);
             box.classList.add('box');
         })
     })
+    //clearWalls
     document.getElementById('clearWalls').addEventListener('click',function(){
         allboxes.map(box=>clearWall(box))
     })
+    //clear only path not the walls
     clearPathfunc=function(){
         allboxes.map(box=>{
             box.classList.contains('visited')&&box.classList.remove('visited','pathed');
         })
     }
     document.getElementById('clearPath').addEventListener('click',clearPathfunc);
+
+
+    //stop algos btn
+    document.querySelector('#stop-btn').addEventListener('click',()=>{
+        clearInterval(timer);
+        document.querySelector('#stop-btn').classList.add('disabled');
+    })
     
+    // global mouse listeners
     grid_table.addEventListener('mousedown',function(){
         isMouseDown=1;
     })
