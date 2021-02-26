@@ -42,8 +42,16 @@ body{
 .btn{
     margin:10px 5px;
     padding:5px;
+    font-weight: 600;
     display: block;
 }
+.btn-white{
+    color:rgba(0, 0, 0, 0.692);
+}
+.btn-white:hover{
+    color:#000;
+}
+
 
 @keyframes wallcells{
     0%{
